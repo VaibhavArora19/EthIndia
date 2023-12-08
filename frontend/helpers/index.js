@@ -7,14 +7,30 @@ import {
   AnonAadhaarProof,
 } from "anon-aadhaar-react";
 import { useEffect } from "react";
-
+import { referralAbi, referralContract } from "@/constants";
 const AnonAadhaar = () => {
   const [anonAadhaar] = useAnonAadhaar();
 
-  const sendVote = async (_pcd) => {
-    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(_pcd);
-    write({
-      args: [rating, a, b, c, Input],
+  const registerReferrer = async () => {
+    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
+      anonAadhaar.pcd
+    );
+    const { hash } = await writeContract({
+      address: referralContract,
+      abi: referralAbi,
+      functionName: "registerReferrer",
+      args: [a, b, c, Input],
+    });
+  };
+  const verifyReferrer = async () => {
+    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
+      anonAadhaar.pcd
+    );
+    const { hash } = await writeContract({
+      address: referralContract,
+      abi: referralAbi,
+      functionName: "registerReferrer",
+      args: [a, b, c, Input],
     });
   };
 
@@ -33,6 +49,10 @@ const AnonAadhaar = () => {
             <AnonAadhaarProof code={JSON.stringify(anonAadhaar.pcd, null, 2)} />
           </>
         )}
+      </div>
+      <div>
+        <button onClick={registerReferrer}>Register referrer</button>
+        <button onClick={verifyReferrer}>verify referrer</button>
       </div>
     </div>
   );

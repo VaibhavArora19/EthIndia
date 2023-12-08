@@ -5,24 +5,91 @@
 // will compile your contracts, add the Hardhat Runtime Environment's members to the
 // global scope, and execute the script.
 const hre = require("hardhat");
+const crypto = require("crypto");
+const anon = require("anon-aadhaar-pcd");
+const fs = require("fs");
+const axios = require("axios");
+async function fetchKey(keyURL) {
+  const keyData = await (
+    await axios.get(keyURL, {
+      responseType: "arraybuffer",
+    })
+  ).data;
+  return keyData;
+}
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const unlockTime = currentTimestampInSeconds + 60;
+  const verifier = await hre.ethers.deployContract("Verifier");
+  await verifier.waitForDeployment();
 
-  const lockedAmount = hre.ethers.parseEther("0.001");
+  const _verifierAddress = await verifier.getAddress();
+  console.log(_verifierAddress);
+  const app_id = BigInt(
+    "196700487049306364386084600156231018794323017728"
+  ).toString(); // random value.
+  const anonAadhaarVerifier = await ethers.deployContract(
+    "AnonAadhaarVerifier",
+    [_verifierAddress, app_id]
+  );
+  await anonAadhaarVerifier.waitForDeployment();
 
-  const lock = await hre.ethers.deployContract("Lock", [unlockTime], {
-    value: lockedAmount,
-  });
+  const _anonAadhaarVerifierAddress = await anonAadhaarVerifier.getAddress();
+  console.log(_anonAadhaarVerifierAddress);
 
-  await lock.waitForDeployment();
+  const ReferralPlugin = await ethers.deployContract("ReferralPlugin", [
+    "0x4098Aaf39d5374573d69b2a95cE936c739216c35",
+    _anonAadhaarVerifierAddress,
+  ]);
+
+  await ReferralPlugin.waitForDeployment();
 
   console.log(
-    `Lock with ${ethers.formatEther(
-      lockedAmount
-    )}ETH and unlock timestamp ${unlockTime} deployed to ${lock.target}`
+    `ReferralPlugin contract deployed to ${await ReferralPlugin.getAddress()}`
   );
+
+  const testFile = __dirname + "/signed.pdf";
+  const pdfRaw = fs.readFileSync(testFile);
+  const pdfBuffer = Buffer.from(pdfRaw);
+  const extractedData = await anon.extractWitness(pdfBuffer, "test123");
+  let witnessInputs = {
+    signature: anon.splitToWords(
+      extractedData.sigBigInt,
+      BigInt(64),
+      BigInt(32)
+    ),
+    modulus: anon.splitToWords(
+      extractedData.modulusBigInt,
+      BigInt(64),
+      BigInt(32)
+    ),
+    base_message: anon.splitToWords(
+      extractedData.msgBigInt,
+      BigInt(64),
+      BigInt(32)
+    ),
+    app_id: app_id,
+  };
+
+  const { a, b, c, Input } = await anon.exportCallDataGroth16(
+    witnessInputs,
+    await fetchKey(anon.WASM_URL),
+    await fetchKey(anon.ZKEY_URL)
+  );
+  console.log(a, b, c, Input);
+
+  console.log(await anonAadhaarVerifier.verifyProof(a, b, c, Input));
+
+  // await ReferralPlugin.registerReferrer(a, b, c, Input);
+  // console.log("registered");
+
+  // await ReferralPlugin.verifyRefer(
+  //   "0xE643CF465eDE9ad11E152BAb8d3cdC6CBC3712E1",
+  //   "0xF8f812A245f9bbc083386Ec4615bC15e02b4D5ff",
+  //   a,
+  //   b,
+  //   c,
+  //   Input
+  // );
 }
 
 // We recommend this pattern to be able to use async/await everywhere
