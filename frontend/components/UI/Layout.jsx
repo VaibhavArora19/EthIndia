@@ -1,11 +1,10 @@
-import React from 'react';
 import Navbar from './Navbar';
 
 const Layout = ({ children }) => {
   return (
-    <div>
+    <div className='bg-[url("/bg.png")] h-screen w-screen  '>
       <Navbar />
-      {children}
+      <div className='flex justify-center items-center h-full'>{children}</div>
     </div>
   );
 };

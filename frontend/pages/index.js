@@ -7,7 +7,7 @@ export default function Home() {
   const [crypto, setCrypto] = useState(true);
 
   return (
-    <main className='bg-[url("/bg.png")] h-screen w-screen  flex flex-col justify-center items-center'>
+    <main >
       <div className='flex mb-5 gap-2 w-[550px]'>
         <p
           onClick={() => {
