@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@1inch/token-plugins": "^1.2.1",
     "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/contracts": "^5.0.1",
     "hardhat": "^2.19.2"
