@@ -8,7 +8,7 @@ export default function Home() {
   const [crypto, setCrypto] = useState(true);
 
   return (
-    <main>
+    <main className="flex flex-col items-center h-screen pt-40">
       <div className="flex mb-5 gap-2 w-[550px]">
         <p
           onClick={() => {
@@ -37,7 +37,7 @@ export default function Home() {
           Fiat
         </p>
       </div>
-      <AnonAadhaar />
+      {/* <AnonAadhaar /> */}
       {crypto ? <Invest /> : <Onramper />}
     </main>
   );

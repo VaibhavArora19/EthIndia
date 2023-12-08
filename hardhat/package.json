@@ -1,7 +1,7 @@
 {
+
   "dependencies": {
     "@1inch/token-plugins": "^1.2.1",
-    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
     "@openzeppelin/contracts": "4.9.2",
     "anon-aadhaar-contracts": "^0.1.14",
     "anon-aadhaar-pcd": "^0.1.14",
