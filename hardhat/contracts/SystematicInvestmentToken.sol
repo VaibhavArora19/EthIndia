@@ -13,7 +13,7 @@ contract SystematicInvestmentToken is ERC20Plugins {
         ERC20Plugins(maxPluginsPerAccount, pluginCallGasLimit)
     {}
 
-    function mint(address account, uint256 amount) external {
-        _mint(account, amount);
+    function mint(uint amount, uint timestamp) external {
+        _mint(msg.sender, amount);
     }
 }
