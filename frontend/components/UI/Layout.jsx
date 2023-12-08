@@ -2,9 +2,9 @@ import Navbar from './Navbar';
 
 const Layout = ({ children }) => {
   return (
-    <div className='bg-[url("/bg.png")] h-screen w-screen  '>
+    <div className='bg-[url("/bg.png")] h-screen w-screen  font-Avenir'>
       <Navbar />
-      <div className='flex justify-center items-center h-full'>{children}</div>
+      <div className='flex justify-center pt-36 h-full'>{children}</div>
     </div>
   );
 };
