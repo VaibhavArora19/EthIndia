@@ -57,7 +57,7 @@ contract ReferralPlugin is Plugin, ERC20 {
     ) internal override {
         // whenever user bought SIT tokens.this will mint rSIT tokens based on referral points user have.
         if (from == address(0) && referralPoints[to] > 0) {
-            uint _amount = referralPoints[to] * 1000 * 1e18;
+            uint _amount = referralPoints[to] * 1e18;
             _mint(to, _amount);
         }
     }
