@@ -69,7 +69,7 @@ const HomeButton = () => {
           : ""}
       </h3>
       <button
-        className="bg-gray-500 rounded-md px-10 py-2 text-white font-semibold hover:bg-blue-500"
+        className="bg-gray-500 rounded-md px-10 py-2 text-white font-semibold hover:bg-pink-800/40 hover:text-pink-800"
         onClick={connectHandler}
       >
         {connected ? "Connected" : "Login"}

@@ -8,7 +8,7 @@ export default function Home() {
   const [crypto, setCrypto] = useState(true);
 
   return (
-    <main className="flex flex-col items-center h-screen pt-40">
+    <main className="flex flex-col items-center min-h-screen pt-32 ">
       <div className="flex mb-5 gap-2 w-[550px]">
         <p
           onClick={() => {
