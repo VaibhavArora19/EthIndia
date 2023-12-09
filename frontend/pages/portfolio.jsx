@@ -1,13 +1,13 @@
+import Refer from "@/components/Modals/Refer";
 import PieChart from "@/components/UI/PieChart";
 import { getAllData } from "@/developer-apis";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
-import { useAccount } from "wagmi";
+import React, { useState } from "react";
 
 const Portfolio = () => {
-  const [showTable, setShowTable] = useState(true);
-  const [showChart, setShowChart] = useState(false);
-  const { address } = useAccount();
+  const [showTable, setShowTable] = useState(false);
+  const [showChart, setShowChart] = useState(true);
+  const [showModal, setShowModal] = useState(false);
 
   async function getData() {
     const info = await getAllData(address);
@@ -23,11 +23,21 @@ const Portfolio = () => {
 
   return (
     <main className="flex flex-col pt-28 min-h-screen mx-auto px-10 font-Avenir bg-black">
-      <div>
-        <p className="text-white text-2xl mb-5 font-semibold">Welcome, Aman!</p>
+      <div className="w-fit">
+        <div className="flex justify-between items-center mb-5">
+          <p className="text-white text-2xl  font-semibold">Welcome, Aman!</p>
+          <button
+            onClick={() => {
+              setShowModal(true);
+            }}
+            className="bg-pink-700/40 text-pink-500 hover:bg-pink-800/40 py-3 px-12 text-sm rounded-md cursor-pointer font-semibold"
+          >
+            Refer & Earn
+          </button>
+        </div>
 
         <div className="flex gap-6">
-          <div className="bg-gradient-to-tr from-[#883389] via-[#8056A4] to-[#4054EC] text-white p-6 rounded-xl w-[350px]">
+          <div className="bg-gradient-to-tr from-[#4C0D25]  to-[#984253] text-white p-6 rounded-xl w-[350px]">
             <Image
               height={35}
               width={35}
@@ -43,8 +53,8 @@ const Portfolio = () => {
             <Image
               height={35}
               width={35}
-              src="/stats_hovered.svg"
-              alt="Total Earning"
+              src="/chart.svg"
+              alt="SIT Tokens"
               className="bg-[#414141] rounded-md p-2"
             />
             <p className="text-sm mt-8 mb-1">SIT Tokens</p>
@@ -58,11 +68,11 @@ const Portfolio = () => {
             <Image
               height={35}
               width={35}
-              src="/stats_hovered.svg"
-              alt="Total Earning"
+              src="/icon.svg"
+              alt="ROI"
               className="bg-[#414141] rounded-md p-2"
             />
-            <p className="text-sm mt-8 mb-1">Return Of Interest</p>
+            <p className="text-sm mt-8 mb-1">Rate Of Interest</p>
             <p className="text-3xl font-semibold">120%</p>
           </div>
         </div>
@@ -103,6 +113,14 @@ const Portfolio = () => {
         <div className="w-[800px] h-[800px]  mt-10 mx-auto">
           <PieChart />
         </div>
+      )}
+
+      {showModal && (
+        <Refer
+          onClose={() => {
+            setShowModal(false);
+          }}
+        />
       )}
     </main>
   );
