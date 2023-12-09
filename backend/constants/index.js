@@ -1,6 +1,6 @@
 exports.referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
 
-exports.mainContract = "0xb1FCFBaf795ad5997e83FC9816BC4BB876ae0399"; //!change this later
+exports.mainContract = "0x2918665099c2902C15Fc3802EC9BaA084529CE5F"; //!change this later
 
 exports.mainContractABI = [
   {
