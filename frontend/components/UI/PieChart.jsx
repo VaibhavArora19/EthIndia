@@ -7,7 +7,7 @@ const data = {
   labels: ['Uniswap', 'Chainlink', 'BNB', 'SOL', 'Matic', 'Bitcoin'],
   datasets: [
     {
-      label: '% of holdings',
+      label: 'TVL in Millions',
       data: [17, 3, 3, 30, 10, 30],
       backgroundColor: [
         'rgba(255, 99, 132, 0.2)',

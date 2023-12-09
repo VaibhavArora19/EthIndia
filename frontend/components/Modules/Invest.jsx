@@ -1,4 +1,9 @@
-import { Defi_Contract, ERC20_ABI, USDC_POLYGON } from "@/constants";
+import {
+  Defi_Contract,
+  ERC20_ABI,
+  USDC_POLYGON,
+  mainContract,
+} from "@/constants";
 import { ethers } from "ethers/lib";
 import Image from "next/image";
 import React, { useState } from "react";
@@ -18,19 +23,12 @@ const Invest = () => {
 
     const user = await signer.getAddress();
 
-    const contract = new ethers.Contract(
-      "address goes here",
-      Defi_Contract,
-      signer
-    );
+    const contract = new ethers.Contract(mainContract, Defi_Contract, signer);
 
     //! usdc contract is of polygon mainnet
     const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
 
-    await usdcContract.approve(
-      "address goes here",
-      "12111111111111111231111113211"
-    );
+    await usdcContract.approve(mainContract, "12111111111111111231111113211");
 
     const timePeriod = time * 86400;
 
