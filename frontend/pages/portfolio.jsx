@@ -14,6 +14,8 @@ const Portfolio = () => {
   const [showChart, setShowChart] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [tokenInfo, setTokenInfo] = useState(null);
+  const [totalBalance, setTotalBalance] = useState(null);
+  const [roi, setRoi] = useState(null);
   const { address } = useAccount();
 
   const getData = useCallback(async () => {
@@ -21,7 +23,15 @@ const Portfolio = () => {
 
     const info = await data.json();
     console.log("gg", info);
+    let balance = 0;
+    let rateOfInterest = 0;
+    for (const token of info.tokenInfo) {
+      balance += token.value_usd;
+      rateOfInterest += token.roi;
+    }
+    setRoi(rateOfInterest / 3);
     setTokenInfo(info.tokenInfo);
+    setTotalBalance(balance);
   }, [address]);
 
   useEffect(() => {
@@ -35,7 +45,13 @@ const Portfolio = () => {
     <main className="flex flex-col pt-28 min-h-screen  px-10 font-Avenir bg-black w-fit">
       <div className="w-fit">
         <div className="flex justify-between items-center mb-5">
-          <p className="text-white text-2xl  font-semibold">Welcome, Aman!</p>
+          <p className="text-white text-2xl  font-semibold">
+            {address &&
+              "Welcome, " +
+                address.substring(0, 8) +
+                "..." +
+                address.substring(36, 43)}
+          </p>
           <button
             onClick={() => {
               setShowModal(true);
@@ -56,7 +72,9 @@ const Portfolio = () => {
               className="bg-white/40 rounded-md p-2"
             />
             <p className="text-sm mt-8 mb-1">Total Balance</p>
-            <p className="text-3xl font-semibold">$98,231</p>
+            <p className="text-3xl font-semibold">
+              {totalBalance && "$" + totalBalance.toString().substring(0, 8)}
+            </p>
           </div>
 
           <div className="bg-[#151515] text-[#707070] p-6 rounded-xl w-[350px]">
@@ -83,7 +101,9 @@ const Portfolio = () => {
               className="bg-[#414141] rounded-md p-2"
             />
             <p className="text-sm mt-8 mb-1">Rate Of Interest</p>
-            <p className="text-3xl font-semibold">120%</p>
+            <p className="text-3xl font-semibold">
+              {roi && "~" + roi.toString().substring(0, 4) + "%"}
+            </p>
           </div>
         </div>
       </div>

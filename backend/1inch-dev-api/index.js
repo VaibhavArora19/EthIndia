@@ -4,7 +4,7 @@ const { ERC20_ABI, mainContract, mainContractABI } = require("../constants");
 const { ethers } = require("ethers");
 
 const getTokenAmount = async () => {
-  const contractAddress = "0x5362fffC85632301293E78512063837c145c13F9"; //!change this to main contract
+  const contractAddress = mainContract; //!change this to main contract
   //   console.log("first");
 
   const url = `https://api.1inch.dev/balance/v1.2/137/balances/${contractAddress}`;
