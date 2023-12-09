@@ -1,6 +1,6 @@
 export const referralContract = "0x49bB97a10376467E12352545BCD4bC50F57f2087";
 
-export const mainContract = "0xxxxxx"; //!change this later
+export const mainContract = "0xb1FCFBaf795ad5997e83FC9816BC4BB876ae0399"; //!change this later
 
 export const SERVER_URL = "http://localhost:8080";
 

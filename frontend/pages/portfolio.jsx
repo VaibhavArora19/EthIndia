@@ -153,7 +153,7 @@ const Portfolio = () => {
                   width={200}
                   height={40}
                   sx={{
-                    background: "#000/80",
+                    background: "#1f1f1f",
                     borderRadius: "12px",
                     marginTop: "8px",
                   }}
