@@ -7,8 +7,6 @@ import {
   mainContract,
   mainContractABI,
 } from "@/constants";
-import { ethers } from "ethers/lib";
-import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { IoChevronDown } from "react-icons/io5";
 import { useContext } from "react";
@@ -18,11 +16,6 @@ import { erc20ABI } from "wagmi";
 import { useAccount } from "wagmi";
 import { ethers } from "ethers/lib";
 import Image from "next/image";
-import React, { useState } from "react";
-import { IoChevronDown } from "react-icons/io5";
-import { useContext } from "react";
-import { StateContext } from "../store/StateContext";
-import TokensListModal from "../UI/TokensListModal";
 import Loader from "../UI/Loader";
 import SuccessModal from "../Modals/SuccessModal";
 
@@ -71,15 +64,21 @@ const Invest = () => {
       );
       //! usdc contract is of polygon mainnet
       const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
-      const tx = await usdcContract.approve(
-        mainContract,
-        "12111111111111111231111113211"
-      );
+      // const tx = await usdcContract.approve(
+      //   mainContract,
+      //   "12111111111111111231111113211"
+      // );
 
-      await tx.wait();
+      // await tx.wait();
 
+      // console.log(ethers.utils.parseUnits(amount, 6).toSt);
       const timePeriod = time * 86400;
-      await contract.mint(user, amount, timePeriod);
+      await contract.mint(
+        user,
+        ethers.utils.parseUnits(amount, 6),
+        timePeriod,
+        { gasLimit: "500000" }
+      );
 
       setIsSuccessfull(true);
       setLoading(false);

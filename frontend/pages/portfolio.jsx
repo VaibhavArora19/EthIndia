@@ -32,6 +32,8 @@ const Portfolio = () => {
 
     const balanceSIT = await contract.balanceOf(address);
 
+    // console.log("bbb", ethers.utils.formatUnits(balanceSIT, 18));
+
     setSitBalance(ethers.utils.formatUnits(balanceSIT, 18));
 
     const data = await fetch(`${SERVER_URL}/token/details/${address}`);
@@ -219,15 +221,19 @@ const Portfolio = () => {
 
           {tokenInfo &&
             tokenInfo.length > 0 &&
-            tokenInfo.map((asset) => (
-              <AssetsInfo
-                key={asset.name}
-                balance={asset.amount}
-                profit={asset.abs_profit_usd}
-                name={asset.name}
-                value={asset.value_usd}
-              />
-            ))}
+            tokenInfo.map((asset) =>
+              AssetsInfo.value ? (
+                <AssetsInfo
+                  key={asset.name}
+                  balance={asset.amount}
+                  profit={asset.abs_profit_usd}
+                  name={asset.name}
+                  value={asset.value_usd}
+                />
+              ) : (
+                <></>
+              )
+            )}
         </div>
       )}
 
