@@ -1,10 +1,8 @@
-export const referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
+exports.referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
 
-export const mainContract = "0xxxxxx"; //!change this later
+exports.mainContract = "0xxxxxx"; //!change this later
 
-export const SERVER_URL = "http://localhost:8080";
-
-export const mainContractABI = [
+exports.mainContractABI = [
   {
     inputs: [
       {
@@ -567,7 +565,7 @@ export const mainContractABI = [
     type: "function",
   },
 ];
-export const referralAbi = [
+exports.referralAbi = [
   {
     inputs: [
       {
@@ -1008,7 +1006,7 @@ export const referralAbi = [
 // export const contract = "0xB0C4BD373936511D09fC6cb0Da87E6c74241Abb7";
 // export const demoNFT = "0x4059b219e66676C1c71cdF58aE0EA5d505268a5c";
 
-export const ERC20_ABI = [
+exports.ERC20_ABI = [
   {
     constant: true,
     inputs: [],
@@ -1231,9 +1229,9 @@ export const ERC20_ABI = [
   },
 ];
 
-export const USDC_POLYGON = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
+exports.USDC_POLYGON = "0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174";
 
-export const Defi_Contract = [
+exports.Defi_Contract = [
   {
     inputs: [
       {

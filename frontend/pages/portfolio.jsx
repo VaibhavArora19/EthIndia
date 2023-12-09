@@ -1,25 +1,30 @@
 import Refer from "@/components/Modals/Refer";
 import PieChart from "@/components/UI/PieChart";
-import { getAllData } from "@/developer-apis";
+import { SERVER_URL } from "@/constants";
+import { getAllData, getTokenPrices, getTokensInfo } from "@/developer-apis";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useAccount } from "wagmi";
 
 const Portfolio = () => {
   const [showTable, setShowTable] = useState(false);
   const [showChart, setShowChart] = useState(true);
   const [showModal, setShowModal] = useState(false);
+  const [tokenInfo, setTokenInfo] = useState(null);
+  const { address } = useAccount();
 
   async function getData() {
-    const info = await getAllData(address);
+    console.log("pp", address);
+    const info = await fetch(`${SERVER_URL}/token/details/${address}`);
 
     console.log("info", info);
   }
 
-  // useEffect(() => {
-  //   if (address) {
-  //     getData();
-  //   }
-  // }, [address]);
+  useEffect(() => {
+    if (address) {
+      getData();
+    }
+  }, [address]);
 
   return (
     <main className="flex flex-col pt-28 min-h-screen mx-auto px-10 font-Avenir bg-black">

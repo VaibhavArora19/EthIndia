@@ -3,11 +3,14 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const router = require("../backend/controller/index");
 
 const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
+
+app.use(router);
 
 mongoose
   .connect(process.env.MONGO_URI)

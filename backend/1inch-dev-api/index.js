@@ -1,8 +1,9 @@
-import { ERC20_ABI, mainContract, mainContractABI } from "@/constants";
-import { ethers } from "ethers";
-import { erc20ABI } from "wagmi";
+// import { ERC20_ABI, mainContract, mainContractABI } from "./constants";
+// import { ethers } from "ethers";
+const { ERC20_ABI, mainContract, mainContractABI } = require("../constants");
+const { ethers } = require("ethers");
 
-export const getTokenAmount = async () => {
+const getTokenAmount = async () => {
   const contractAddress = "0x5362fffC85632301293E78512063837c145c13F9"; //!change this to main contract
   console.log("first");
 
@@ -18,10 +19,13 @@ export const getTokenAmount = async () => {
 
   const response = await data.json();
 
-  console.log("rr", response);
+  //   console.log("rr", response);
+
+  return response;
 };
 
-export const getTokenDetails = async (walletAddress, contractAddress) => {
+const getTokenDetails = async (walletAddress, contractAddress) => {
+  console.log("ss", walletAddress, contractAddress);
   const url =
     "https://api.1inch.dev/portfolio/v3/portfolio/additional/erc20/details";
 
@@ -34,16 +38,17 @@ export const getTokenDetails = async (walletAddress, contractAddress) => {
     `${url}?addresses=${walletAddress}&contract_address=${contractAddress}&timerange=${range}&chain_id=${chain_id}`,
     {
       headers: {
-        Authorization: "Bearer CTMFKZSuNPsU5bBotvflkkiBxFqoEQAB",
+        Authorization: "Bearer 6dU0Zm776uOQV6sNuZtXgGkElhBAUUXc",
       },
     }
   );
+  console.log("status", data.status);
   const response = await data.json();
 
   console.log("rr", response);
 };
 
-export const getTokenPrices = async (addresses) => {
+const getTokenPrices = async (addresses) => {
   const tokenAddresses = document.write(addresses.toString());
 
   const url = `https://api.1inch.dev/price/v1.1/137/${tokenAddresses}?currency=USD`;
@@ -59,7 +64,7 @@ export const getTokenPrices = async (addresses) => {
   console.log("rr", response);
 };
 
-export const getSitTokenBalance = async (userAddress) => {
+const getSitTokenBalance = async (userAddress) => {
   const provider = new ethers.providers.JsonRpcProvider(window.ethereum);
   const signer = provider.getSigner();
 
@@ -70,17 +75,17 @@ export const getSitTokenBalance = async (userAddress) => {
   return sitBalance;
 };
 
-export const getTokenBalanceWithPrices = async () => {
+const getTokenBalanceWithPrices = async () => {
   const tokenAmount = await getTokenAmount();
   const tokenBalance = await getTokenPrices();
 };
 
-export const getTokensAllInfo = async (tokenAddress) => {
+const getTokensAllInfo = async (tokenAddress) => {
   const provider = new ethers.providers.JsonRpcProvider(
     "https://polygon-mainnet.g.alchemy.com/v2/pBqgId5698tBoNxlWJdzCmYPc07ewNuY"
   );
 
-  const contract = new ethers.Contract(tokenAddress, erc20ABI, provider);
+  const contract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
 
   const name = await contract.name();
   const symbol = await contract.symbol();
@@ -88,29 +93,34 @@ export const getTokensAllInfo = async (tokenAddress) => {
   return { name, symbol };
 };
 
-export const getAllData = async () => {
+const getAllData = async () => {
   const balance = await getSitTokenBalance();
 
   return balance;
 };
 
-export const getTokensInfo = async (walletAddress) => {
+const getTokensInfo = async (walletAddress) => {
   const tokens = await getTokenAmount();
-  return;
+  //   return;
 
-  let tokensWithBalance;
+  let tokensWithBalance = [];
 
   for (let key in tokens) {
+    // console.log("key", key, tokens[key]);
     if (tokens.hasOwnProperty(key)) {
-      value = tokens[key];
+      let value = tokens[key];
 
-      if (value !== "0") {
+      if (value != 0 && key !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
         tokensWithBalance.push({ address: key, value: value });
       }
     }
   }
 
+  tokensWithBalance.slice(0, 3);
+
   for (let i = 0; i < tokensWithBalance.length; i++) {
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
     const data = await getTokenDetails(
       walletAddress,
       tokensWithBalance[i].address
@@ -130,3 +140,5 @@ export const getTokensInfo = async (walletAddress) => {
 
   return tokensWithBalance;
 };
+
+module.exports = { getTokensInfo };
