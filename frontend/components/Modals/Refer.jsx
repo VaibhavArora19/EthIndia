@@ -19,7 +19,6 @@ const Refer = ({ onClose }) => {
   const [anonAadhaar] = useAnonAadhaar();
   const [register, setRegister] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [alreadyRegistered, setAlreadyRegistered] = useState(false);
 
   const getRefer = async () => {
     try {

@@ -12,12 +12,14 @@ import { useContext } from 'react';
 import { StateContext } from '../store/StateContext';
 import TokensListModal from '../UI/TokensListModal';
 import Loader from '../UI/Loader';
+import SuccessModal from '../Modals/SuccessModal';
 
 const Invest = () => {
   const [amount, setAmount] = useState(null);
   const [time, setTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isSuccessfull, setIsSuccessfull] = useState(true);
   const [token, setToken] = useState({
     tokenName: 'USD Coin (POS)',
     tokenImg: '/usdc.png',
@@ -33,19 +35,14 @@ const Invest = () => {
       setLoading(true);
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
-
       const user = await signer.getAddress();
-
       const contract = new ethers.Contract(mainContract, Defi_Contract, signer);
-
       //! usdc contract is of polygon mainnet
       const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
-
       await usdcContract.approve(mainContract, '12111111111111111231111113211');
-
       const timePeriod = time * 86400;
-
       await contract.mint(user, amount, timePeriod);
+      setIsSuccessfull(true);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -141,6 +138,14 @@ const Invest = () => {
           sendData={sendToken}
           onClose={() => {
             setShowModal(false);
+          }}
+        />
+      )}
+
+      {!isSuccessfull && (
+        <SuccessModal
+          onClose={() => {
+            setIsSuccessfull(false);
           }}
         />
       )}
