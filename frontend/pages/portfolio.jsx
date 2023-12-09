@@ -1,10 +1,12 @@
-import Refer from "@/components/Modals/Refer";
-import PieChart from "@/components/UI/PieChart";
-import { SERVER_URL } from "@/constants";
-import { getAllData, getTokenPrices, getTokensInfo } from "@/developer-apis";
-import Image from "next/image";
+import { getAllData } from "@/developer-apis";
 import React, { useState, useEffect, useCallback } from "react";
-import { useAccount } from "wagmi";
+import Refer from "@/components/Modals/Refer";
+import AssetsHeader from "@/components/Modules/AssetsHeader";
+import AssetsInfo from "@/components/Modules/AssetsInfo";
+import PieChart from "@/components/UI/PieChart";
+import { dummyAssets, headers } from "@/data";
+import Image from "next/image";
+import { SERVER_URL } from "@/constants";
 
 const Portfolio = () => {
   const [showTable, setShowTable] = useState(false);
@@ -29,7 +31,7 @@ const Portfolio = () => {
   }, [address, getData]);
 
   return (
-    <main className="flex flex-col pt-28 min-h-screen mx-auto px-10 font-Avenir bg-black">
+    <main className="flex flex-col pt-28 min-h-screen  px-10 font-Avenir bg-black w-fit">
       <div className="w-fit">
         <div className="flex justify-between items-center mb-5">
           <p className="text-white text-2xl  font-semibold">Welcome, Aman!</p>
@@ -119,6 +121,22 @@ const Portfolio = () => {
       {showChart && tokenInfo && (
         <div className="w-[800px] h-[800px]  mt-10 mx-auto">
           <PieChart tokenInfo={tokenInfo} />
+        </div>
+      )}
+
+      {showTable && (
+        <div className="w-full">
+          <AssetsHeader headers={headers} />
+
+          {dummyAssets.map((asset) => (
+            <AssetsInfo
+              key={asset.name}
+              balance={asset.balance}
+              profit={asset.profit}
+              name={asset.name}
+              value={asset.value}
+            />
+          ))}
         </div>
       )}
 

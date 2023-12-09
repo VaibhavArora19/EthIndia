@@ -1,5 +1,6 @@
 "use client";
 import { exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
+import { writeContract } from "@wagmi/core";
 
 import {
   LogInWithAnonAadhaar,
@@ -12,15 +13,21 @@ const AnonAadhaar = () => {
   const [anonAadhaar] = useAnonAadhaar();
 
   const registerReferrer = async () => {
-    const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
-      anonAadhaar.pcd
-    );
-    const { hash } = await writeContract({
-      address: referralContract,
-      abi: referralAbi,
-      functionName: "registerReferrer",
-      args: [a, b, c, Input],
-    });
+    try {
+      console.log("HI");
+      const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
+        anonAadhaar.pcd
+      );
+      console.log("done");
+      const { hash } = await writeContract({
+        address: referralContract,
+        abi: referralAbi,
+        functionName: "registerReferrer",
+        args: [a, b, c, Input],
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
   const verifyReferrer = async () => {
     const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
@@ -51,7 +58,9 @@ const AnonAadhaar = () => {
         )}
       </div>
       <div>
-        <button onClick={registerReferrer}>Register referrer</button>
+        <button onClick={registerReferrer} className="text-white">
+          Register referrer
+        </button>
         <button onClick={verifyReferrer}>verify referrer</button>
       </div>
     </div>

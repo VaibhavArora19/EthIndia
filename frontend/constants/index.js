@@ -1,4 +1,4 @@
-export const referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
+export const referralContract = "0x388FF4cb39Eb12d8EBE870375601D41B32E151b0";
 
 export const mainContract = "0xxxxxx"; //!change this later
 
@@ -567,6 +567,7 @@ export const mainContractABI = [
     type: "function",
   },
 ];
+
 export const referralAbi = [
   {
     inputs: [
@@ -788,6 +789,63 @@ export const referralAbi = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "referralPoints",
+    outputs: [
+      {
+        internalType: "uint256",
+        name: "",
+        type: "uint256",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "referred",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "referrers",
+    outputs: [
+      {
+        internalType: "bool",
+        name: "",
+        type: "bool",
       },
     ],
     stateMutability: "view",

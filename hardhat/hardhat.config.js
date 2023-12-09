@@ -22,15 +22,16 @@ module.exports = {
       url: "https://rpc.public.zkevm-test.net	",
       accounts: [DEPLOYER_PRIVATE_KEY],
     },
-    goerli: {
+    mumbai: {
       // If not set, you can get your own Alchemy API key at https://dashboard.alchemyapi.io or https://infura.io
-      url: process.env.GOERLI_RPC_URL ?? "",
+      url: "https://polygon-testnet.public.blastapi.io",
       accounts: [DEPLOYER_PRIVATE_KEY],
     },
   },
   etherscan: {
     apiKey: {
       polygonZkEVMTestnet: "DGGT1IJ7YX5CJ39I2U3KRGW1T45A4BYWW2",
+      polygonMumbai: "USK8S3HV5D9GMWA14TF9WKI4KRBW4Z27C7",
     },
   },
 };

@@ -7,9 +7,9 @@ import "../AnonAadhaar/interfaces/IAnonAadhaarVerifier.sol";
 
 contract ReferralPlugin is Plugin, ERC20 {
     address public anonAadhaarVerifierAddr;
-    mapping(address => uint) referralPoints;
-    mapping(address => bool) referrers;
-    mapping(address => bool) referred;
+    mapping(address => uint) public referralPoints;
+    mapping(address => bool) public referrers;
+    mapping(address => bool) public referred;
 
     constructor(
         IERC20Plugins token_,
@@ -24,7 +24,7 @@ contract ReferralPlugin is Plugin, ERC20 {
         uint[2] calldata _pC,
         uint[34] calldata _pubSignals
     ) public {
-        require(referrers[msg.sender], "Already Registered");
+        require(!referrers[msg.sender], "Already Registered");
         require(verify(_pA, _pB, _pC, _pubSignals), "Not Valid");
         referrers[msg.sender] = true;
         token.addPlugin(address(this));
@@ -37,7 +37,7 @@ contract ReferralPlugin is Plugin, ERC20 {
         uint[2] calldata _pC,
         uint[34] calldata _pubSignals
     ) public {
-        require(referred[msg.sender], "Already Claimed");
+        require(!referred[msg.sender], "Already Claimed");
         require(referrers[referrer], "Not a referrer");
         require(verify(_pA, _pB, _pC, _pubSignals), "Not Valid");
         token.addPlugin(address(this));
