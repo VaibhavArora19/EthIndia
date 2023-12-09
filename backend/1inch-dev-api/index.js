@@ -1,7 +1,7 @@
 // import { ERC20_ABI, mainContract, mainContractABI } from "./constants";
 // import { ethers } from "ethers";
-const { ERC20_ABI, mainContract, mainContractABI } = require("../constants");
-const { ethers } = require("ethers");
+const { ERC20_ABI, mainContract, mainContractABI } = require('../constants');
+const { ethers } = require('ethers');
 
 const getTokenAmount = async () => {
   const contractAddress = mainContract; //!change this to main contract
@@ -11,7 +11,7 @@ const getTokenAmount = async () => {
 
   const data = await fetch(url, {
     headers: {
-      Authorization: "Bearer CTMFKZSuNPsU5bBotvflkkiBxFqoEQAB",
+      Authorization: 'Bearer CTMFKZSuNPsU5bBotvflkkiBxFqoEQAB',
     },
   });
 
@@ -27,18 +27,18 @@ const getTokenAmount = async () => {
 const getTokenDetails = async (walletAddress, contractAddress) => {
   //   console.log("ss", walletAddress, contractAddress);
   const url =
-    "https://api.1inch.dev/portfolio/v3/portfolio/additional/erc20/details";
+    'https://api.1inch.dev/portfolio/v3/portfolio/additional/erc20/details';
 
   // const addresses = "0x5362fffC85632301293E78512063837c145c13F9";
   // const contract_address = "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270";
-  const range = "1year";
-  const chain_id = "137";
+  const range = '1year';
+  const chain_id = '137';
 
   const data = await fetch(
     `${url}?addresses=${walletAddress}&contract_address=${contractAddress}&timerange=${range}&chain_id=${chain_id}`,
     {
       headers: {
-        Authorization: "Bearer 6dU0Zm776uOQV6sNuZtXgGkElhBAUUXc",
+        Authorization: 'Bearer 6dU0Zm776uOQV6sNuZtXgGkElhBAUUXc',
       },
     }
   );
@@ -57,7 +57,7 @@ const getTokenPrices = async (addresses) => {
 
   const data = await fetch(url, {
     headers: {
-      Authorization: "Bearer CTMFKZSuNPsU5bBotvflkkiBxFqoEQAB",
+      Authorization: 'Bearer CTMFKZSuNPsU5bBotvflkkiBxFqoEQAB',
     },
   });
 
@@ -84,7 +84,7 @@ const getTokenBalanceWithPrices = async () => {
 
 const getTokensAllInfo = async (tokenAddress) => {
   const provider = new ethers.providers.JsonRpcProvider(
-    "https://polygon-mainnet.g.alchemy.com/v2/pBqgId5698tBoNxlWJdzCmYPc07ewNuY"
+    'https://polygon-mainnet.g.alchemy.com/v2/pBqgId5698tBoNxlWJdzCmYPc07ewNuY'
   );
 
   const contract = new ethers.Contract(tokenAddress, ERC20_ABI, provider);
@@ -112,14 +112,14 @@ const getTokensInfo = async (walletAddress) => {
     if (tokens.hasOwnProperty(key)) {
       let value = tokens[key];
 
-      if (value != 0 && key !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
+      if (value != 0 && key !== '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee') {
         tokenss.push({ address: key, value: value });
       }
     }
   }
 
   let tokensWithBalance = tokenss.slice(0, 3);
-  console.log("first,", tokensWithBalance);
+  console.log('first,', tokensWithBalance);
 
   let finalTokens = [];
 
@@ -132,7 +132,7 @@ const getTokensInfo = async (walletAddress) => {
       tokensWithBalance[i].address
     );
 
-    console.log("dd", data);
+    console.log('dd', data);
 
     const { name, symbol } = await getTokensAllInfo(
       tokensWithBalance[i].address

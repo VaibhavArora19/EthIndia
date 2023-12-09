@@ -1,18 +1,18 @@
-import React, { useState } from "react";
-import Backdrop from "../UI/Backdrop";
-import { FaLink } from "react-icons/fa6";
-import { useAccount } from "wagmi";
-import { exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
-import { writeContract, waitForTransaction } from "@wagmi/core";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { referralAbi, referralContract } from "@/constants";
+import React, { useState } from 'react';
+import Backdrop from '../UI/Backdrop';
+import { FaLink } from 'react-icons/fa6';
+import { useAccount } from 'wagmi';
+import { exportCallDataGroth16FromPCD } from 'anon-aadhaar-pcd';
+import { writeContract, waitForTransaction } from '@wagmi/core';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { referralAbi, referralContract } from '@/constants';
 
 import {
   LogInWithAnonAadhaar,
   useAnonAadhaar,
   AnonAadhaarProof,
-} from "anon-aadhaar-react";
+} from 'anon-aadhaar-react';
 const Refer = ({ onClose }) => {
   const { address } = useAccount();
   const [anonAadhaar] = useAnonAadhaar();
@@ -23,16 +23,16 @@ const Refer = ({ onClose }) => {
       const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
         anonAadhaar.pcd
       );
-      console.log(a);
       const { hash } = await writeContract({
         address: referralContract,
         abi: referralAbi,
-        functionName: "registerReferrer",
+        functionName: 'registerReferrer',
         args: [a, b, c, Input],
       });
       await waitForTransaction({ hash });
+      console.log('xxx', hash);
       setRegister(true);
-      toast.success("Registered Successfully");
+      toast.success('Registered Successfully');
     } catch (e) {
       console.log(e);
     }
@@ -41,15 +41,16 @@ const Refer = ({ onClose }) => {
   return (
     <>
       <Backdrop onClose={onClose} />
-      <div className="bg-[#0F0F0F] w-[500px] fixed top-[50%] left-[50%] text-white -translate-x-[50%] -translate-y-[50%] z-30 p-6 rounded-md">
-        <p className="text-2xl font-semibold mb-1">Refer & Earn</p>
-        <p className="mb-8">
+      <div className='bg-[#0F0F0F] w-[500px] fixed top-[50%] left-[50%] text-white -translate-x-[50%] -translate-y-[50%] z-30 p-6 rounded-md'>
+        <p className='text-2xl font-semibold mb-1'>Refer & Earn</p>
+        <p className='mb-5'>
           Only people with the aadhar card can use this Referal system signing
           up with ANON Aadhar.
         </p>
 
+        <p className='text-sm font-semibold text-left mb-5'>Note: 10 rSIT = 1 SIT</p>
         {/** Hide once logged in */}
-        {anonAadhaar.status != "logged-in" ? (
+        {anonAadhaar.status != 'logged-in' ? (
           <LogInWithAnonAadhaar />
         ) : register ? (
           <button
@@ -57,10 +58,9 @@ const Refer = ({ onClose }) => {
               navigator.clipboard.writeText(
                 `${window.location.origin}/claim/${address}`
               );
-              toast.success("copied");
+              toast.success('copied');
             }}
-            className="w-full flex items-center gap-2 justify-center text-center py-3 bg-pink-700/40 text-white rounded-md hover:bg-pink-800/40"
-          >
+            className='w-full flex items-center gap-2 justify-center text-center py-3 bg-pink-700/40 text-white rounded-md hover:bg-pink-800/40'>
             <FaLink size={20} />
             <p>Copy Link</p>
           </button>
@@ -68,9 +68,8 @@ const Refer = ({ onClose }) => {
           <div>
             {/* Show After login with Aadhar */}
             <button
-              className="w-full text-center py-3 bg-pink-700/40 text-white rounded-md hover:bg-pink-800/40"
-              onClick={registerReferrer}
-            >
+              className='w-full text-center py-3 bg-pink-700/40 text-white rounded-md hover:bg-pink-800/40'
+              onClick={registerReferrer}>
               Register
             </button>
           </div>

@@ -29,7 +29,7 @@ const PieChart = (props) => {
     labels: names,
     datasets: [
       {
-        label: "TVL in Millions",
+        label: "TVL in USD",
         data: values,
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
