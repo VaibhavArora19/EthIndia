@@ -1,6 +1,6 @@
 export const referralContract = "0x49bB97a10376467E12352545BCD4bC50F57f2087";
 
-export const mainContract = "0xxxxxx"; //!change this later
+export const mainContract = "0x2918665099c2902C15Fc3802EC9BaA084529CE5F"; //!change this later
 
 export const SERVER_URL = "http://localhost:8080";
 
@@ -75,6 +75,11 @@ export const mainContractABI = [
         internalType: "uint256",
         name: "pluginCallGasLimit",
         type: "uint256",
+      },
+      {
+        internalType: "contract IERC20",
+        name: "_usdc",
+        type: "address",
       },
     ],
     stateMutability: "nonpayable",
@@ -153,6 +158,25 @@ export const mainContractABI = [
       },
     ],
     name: "Approval",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
     type: "event",
   },
   {
@@ -408,6 +432,11 @@ export const mainContractABI = [
         name: "amount",
         type: "uint256",
       },
+      {
+        internalType: "uint256",
+        name: "timestamp",
+        type: "uint256",
+      },
     ],
     name: "mint",
     outputs: [],
@@ -422,6 +451,19 @@ export const mainContractABI = [
         internalType: "string",
         name: "",
         type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "owner",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
     stateMutability: "view",
@@ -548,6 +590,41 @@ export const mainContractABI = [
   },
   {
     inputs: [],
+    name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "token",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "_swapper",
+        type: "address",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+      {
+        internalType: "bytes",
+        name: "data",
+        type: "bytes",
+      },
+    ],
+    name: "swapTokens",
+    outputs: [],
+    stateMutability: "payable",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "symbol",
     outputs: [
       {
@@ -622,6 +699,19 @@ export const mainContractABI = [
         type: "bool",
       },
     ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "transferOwnership",
+    outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
