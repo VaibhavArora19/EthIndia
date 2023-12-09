@@ -17,9 +17,10 @@ const Invest = () => {
   const [time, setTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [token, setToken] = useState({
-    tokenId: '',
     tokenName: 'USD Coin (POS)',
     tokenImg: '/usdc.png',
+    tokenAddress: '0x0',
+    tokenDecimal: 1,
   });
   const ctx = useContext(StateContext);
 
@@ -45,6 +46,8 @@ const Invest = () => {
   const sendToken = (t) => {
     setToken(t);
   };
+
+  console.log('xxx', token);
 
   return (
     <div>
