@@ -3,7 +3,7 @@ import PieChart from "@/components/UI/PieChart";
 import { SERVER_URL } from "@/constants";
 import { getAllData, getTokenPrices, getTokensInfo } from "@/developer-apis";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useAccount } from "wagmi";
 
 const Portfolio = () => {
@@ -13,18 +13,20 @@ const Portfolio = () => {
   const [tokenInfo, setTokenInfo] = useState(null);
   const { address } = useAccount();
 
-  async function getData() {
-    console.log("pp", address);
-    const info = await fetch(`${SERVER_URL}/token/details/${address}`);
+  const getData = useCallback(async () => {
+    const data = await fetch(`${SERVER_URL}/token/details/${address}`);
 
-    console.log("info", info);
-  }
+    const info = await data.json();
+    console.log("gg", info);
+    setTokenInfo(info.tokenInfo);
+  }, [address]);
 
   useEffect(() => {
     if (address) {
+      console.log("add", address);
       getData();
     }
-  }, [address]);
+  }, [address, getData]);
 
   return (
     <main className="flex flex-col pt-28 min-h-screen mx-auto px-10 font-Avenir bg-black">
@@ -114,9 +116,9 @@ const Portfolio = () => {
         </div>
       </div>
 
-      {showChart && (
+      {showChart && tokenInfo && (
         <div className="w-[800px] h-[800px]  mt-10 mx-auto">
-          <PieChart />
+          <PieChart tokenInfo={tokenInfo} />
         </div>
       )}
 

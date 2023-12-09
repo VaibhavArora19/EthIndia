@@ -4,8 +4,8 @@ const { ERC20_ABI, mainContract, mainContractABI } = require("../constants");
 const { ethers } = require("ethers");
 
 const getTokenAmount = async () => {
-  const contractAddress = "0x5362fffC85632301293E78512063837c145c13F9"; //!change this to main contract
-  console.log("first");
+  const contractAddress = mainContract; //!change this to main contract
+  //   console.log("first");
 
   const url = `https://api.1inch.dev/balance/v1.2/137/balances/${contractAddress}`;
 
@@ -15,7 +15,7 @@ const getTokenAmount = async () => {
     },
   });
 
-  console.log(data.status);
+  //   console.log(data.status);
 
   const response = await data.json();
 
@@ -25,7 +25,7 @@ const getTokenAmount = async () => {
 };
 
 const getTokenDetails = async (walletAddress, contractAddress) => {
-  console.log("ss", walletAddress, contractAddress);
+  //   console.log("ss", walletAddress, contractAddress);
   const url =
     "https://api.1inch.dev/portfolio/v3/portfolio/additional/erc20/details";
 
@@ -42,10 +42,12 @@ const getTokenDetails = async (walletAddress, contractAddress) => {
       },
     }
   );
-  console.log("status", data.status);
+  //   console.log("status", data.status);
   const response = await data.json();
 
-  console.log("rr", response);
+  return response;
+
+  //   console.log("rr", response);
 };
 
 const getTokenPrices = async (addresses) => {
@@ -61,7 +63,7 @@ const getTokenPrices = async (addresses) => {
 
   const response = await data.json();
 
-  console.log("rr", response);
+  //   console.log("rr", response);
 };
 
 const getSitTokenBalance = async (userAddress) => {
@@ -103,7 +105,7 @@ const getTokensInfo = async (walletAddress) => {
   const tokens = await getTokenAmount();
   //   return;
 
-  let tokensWithBalance = [];
+  let tokenss = [];
 
   for (let key in tokens) {
     // console.log("key", key, tokens[key]);
@@ -111,34 +113,40 @@ const getTokensInfo = async (walletAddress) => {
       let value = tokens[key];
 
       if (value != 0 && key !== "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee") {
-        tokensWithBalance.push({ address: key, value: value });
+        tokenss.push({ address: key, value: value });
       }
     }
   }
 
-  tokensWithBalance.slice(0, 3);
+  let tokensWithBalance = tokenss.slice(0, 3);
+  console.log("first,", tokensWithBalance);
+
+  let finalTokens = [];
 
   for (let i = 0; i < tokensWithBalance.length; i++) {
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
 
+    console.log("first", walletAddress, tokensWithBalance[i].address);
     const data = await getTokenDetails(
       walletAddress,
       tokensWithBalance[i].address
     );
 
+    console.log("dd", data);
+
     const { name, symbol } = await getTokensAllInfo(
       tokensWithBalance[i].address
     );
 
-    tokensWithBalance[i] = {
+    finalTokens.push({
       ...tokensWithBalance[i],
       ...data,
       name,
       symbol,
-    };
+    });
   }
 
-  return tokensWithBalance;
+  return finalTokens;
 };
 
 module.exports = { getTokensInfo };

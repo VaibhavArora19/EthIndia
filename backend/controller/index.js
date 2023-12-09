@@ -4,7 +4,6 @@ const router = express.Router();
 
 router.get("/token/details/:walletAddress", async (req, res, next) => {
   const { walletAddress } = req.params;
-  console.log("asasdsa", walletAddress);
 
   const tokenInfo = await getTokensInfo(walletAddress);
 
