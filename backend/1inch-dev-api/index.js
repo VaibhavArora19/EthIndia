@@ -126,9 +126,9 @@ const getTokensInfo = async (walletAddress) => {
   for (let i = 0; i < tokensWithBalance.length; i++) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    console.log("first", walletAddress, tokensWithBalance[i].address);
+    // console.log("first", walletAddress, tokensWithBalance[i].address);
     const data = await getTokenDetails(
-      walletAddress,
+      mainContract,
       tokensWithBalance[i].address
     );
 
@@ -146,6 +146,8 @@ const getTokensInfo = async (walletAddress) => {
     });
   }
 
+  //do it for every erc 20 token and total balance
+  //(total balance / total sit in supply) * total sit token user hold
   return finalTokens;
 };
 
