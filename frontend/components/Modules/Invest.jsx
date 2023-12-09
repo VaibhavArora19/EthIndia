@@ -11,11 +11,13 @@ import { IoChevronDown } from 'react-icons/io5';
 import { useContext } from 'react';
 import { StateContext } from '../store/StateContext';
 import TokensListModal from '../UI/TokensListModal';
+import Loader from '../UI/Loader';
 
 const Invest = () => {
   const [amount, setAmount] = useState(null);
   const [time, setTime] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState({
     tokenName: 'USD Coin (POS)',
     tokenImg: '/usdc.png',
@@ -26,28 +28,34 @@ const Invest = () => {
 
   const investHandler = async () => {
     //! if user is logged in using metamask
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
 
-    const user = await signer.getAddress();
+    try {
+      setLoading(true);
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
 
-    const contract = new ethers.Contract(mainContract, Defi_Contract, signer);
+      const user = await signer.getAddress();
 
-    //! usdc contract is of polygon mainnet
-    const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
+      const contract = new ethers.Contract(mainContract, Defi_Contract, signer);
 
-    await usdcContract.approve(mainContract, '12111111111111111231111113211');
+      //! usdc contract is of polygon mainnet
+      const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
 
-    const timePeriod = time * 86400;
+      await usdcContract.approve(mainContract, '12111111111111111231111113211');
 
-    await contract.mint(user, amount, timePeriod);
+      const timePeriod = time * 86400;
+
+      await contract.mint(user, amount, timePeriod);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
   };
 
   const sendToken = (t) => {
     setToken(t);
   };
-
-  console.log('xxx', token);
 
   return (
     <div>
@@ -124,7 +132,7 @@ const Invest = () => {
           onClick={investHandler}
           type='button'
           className='bg-[#58162D] w-full mt-3 text-white py-3 font-semibold text-base hover:bg-[#421021] tracking-wider   rounded-2xl '>
-          Invest in SIT
+          {loading ? <Loader inComp={true} /> : 'Invest in SIT'}
         </button>
       </div>
 
