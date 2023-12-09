@@ -37,7 +37,7 @@ export default function Home() {
           Fiat
         </p>
       </div>
-      {/* <AnonAadhaar /> */}
+      <AnonAadhaar />
       {crypto ? <Invest /> : <Onramper />}
     </main>
   );

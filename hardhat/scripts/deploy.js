@@ -47,37 +47,37 @@ async function main() {
     `ReferralPlugin contract deployed to ${await ReferralPlugin.getAddress()}`
   );
 
-  const testFile = __dirname + "/signed.pdf";
-  const pdfRaw = fs.readFileSync(testFile);
-  const pdfBuffer = Buffer.from(pdfRaw);
-  const extractedData = await anon.extractWitness(pdfBuffer, "test123");
-  let witnessInputs = {
-    signature: anon.splitToWords(
-      extractedData.sigBigInt,
-      BigInt(64),
-      BigInt(32)
-    ),
-    modulus: anon.splitToWords(
-      extractedData.modulusBigInt,
-      BigInt(64),
-      BigInt(32)
-    ),
-    base_message: anon.splitToWords(
-      extractedData.msgBigInt,
-      BigInt(64),
-      BigInt(32)
-    ),
-    app_id: app_id,
-  };
+  // const testFile = __dirname + "/signed.pdf";
+  // const pdfRaw = fs.readFileSync(testFile);
+  // const pdfBuffer = Buffer.from(pdfRaw);
+  // const extractedData = await anon.extractWitness(pdfBuffer, "test123");
+  // let witnessInputs = {
+  //   signature: anon.splitToWords(
+  //     extractedData.sigBigInt,
+  //     BigInt(64),
+  //     BigInt(32)
+  //   ),
+  //   modulus: anon.splitToWords(
+  //     extractedData.modulusBigInt,
+  //     BigInt(64),
+  //     BigInt(32)
+  //   ),
+  //   base_message: anon.splitToWords(
+  //     extractedData.msgBigInt,
+  //     BigInt(64),
+  //     BigInt(32)
+  //   ),
+  //   app_id: app_id,
+  // };
 
-  const { a, b, c, Input } = await anon.exportCallDataGroth16(
-    witnessInputs,
-    await fetchKey(anon.WASM_URL),
-    await fetchKey(anon.ZKEY_URL)
-  );
-  console.log(a, b, c, Input);
+  // const { a, b, c, Input } = await anon.exportCallDataGroth16(
+  //   witnessInputs,
+  //   await fetchKey(anon.WASM_URL),
+  //   await fetchKey(anon.ZKEY_URL)
+  // );
+  // console.log(a, b, c, Input);
 
-  console.log(await anonAadhaarVerifier.verifyProof(a, b, c, Input));
+  // console.log(await anonAadhaarVerifier.verifyProof(a, b, c, Input));
 
   // await ReferralPlugin.registerReferrer(a, b, c, Input);
   // console.log("registered");

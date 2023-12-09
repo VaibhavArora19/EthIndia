@@ -1,4 +1,4 @@
-export const referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
+export const referralContract = "0x29722f24Aa292Ab448348C42d4D5d56379294E6f";
 export const referralAbi = [
   {
     inputs: [
