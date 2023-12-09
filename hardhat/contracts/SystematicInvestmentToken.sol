@@ -20,12 +20,12 @@ contract SystematicInvestmentToken is ERC20Plugins, Ownable {
         usdc = _usdc;
     }
 
-    function mint(uint amount, uint timestamp) external {
-        // require(
-        //     usdc.transferFrom(msg.sender, address(this), amount),
-        //     "Transfer failed"
-        // );
-        _mint(msg.sender, amount);
+    function mint(address account, uint amount, uint timestamp) external {
+        require(
+            usdc.transferFrom(msg.sender, address(this), amount),
+            "Transfer failed"
+        );
+        _mint(account, amount);
     }
 
     function swapTokens(
