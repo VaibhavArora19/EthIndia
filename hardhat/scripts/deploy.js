@@ -19,10 +19,11 @@ async function fetchKey(keyURL) {
 }
 
 async function main() {
-  const token = await hre.ethers.deployContract(
-    "SystematicInvestmentToken",
-    [5, 100000]
-  );
+  const token = await hre.ethers.deployContract("SystematicInvestmentToken", [
+    5,
+    100000,
+    "0x603b86075A510c31e3749058F9c1d97AD57646E3",
+  ]);
   await token.waitForDeployment();
   const tokenAddress = await token.getAddress();
   console.log(tokenAddress);
@@ -91,7 +92,6 @@ async function main() {
 
   // await ReferralPlugin.verifyRefer(
   //   "0xE643CF465eDE9ad11E152BAb8d3cdC6CBC3712E1",
-  //   "0xF8f812A245f9bbc083386Ec4615bC15e02b4D5ff",
   //   a,
   //   b,
   //   c,
