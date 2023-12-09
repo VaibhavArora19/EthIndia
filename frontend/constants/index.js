@@ -1,4 +1,4 @@
-export const referralContract = "0x428343EBE22D7d4335eB8281EE4aE553f7f0C01E";
+export const referralContract = "0x49bB97a10376467E12352545BCD4bC50F57f2087";
 
 export const mainContract = "0xxxxxx"; //!change this later
 

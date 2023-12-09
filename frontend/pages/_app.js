@@ -8,6 +8,7 @@ import { WagmiConfig } from "wagmi";
 import { polygonMumbai } from "viem/chains";
 import { publicProvider } from "@wagmi/core/providers/public";
 import { createConfig, configureChains } from "@wagmi/core";
+import { alchemyProvider } from "wagmi/providers/alchemy";
 
 // 1. Get projectId at https://cloud.walletconnect.com
 const projectId = "447f07b599262f049ffcd2e6435d1856";
@@ -22,7 +23,7 @@ const metadata = {
 
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [polygonMumbai],
-  [publicProvider()]
+  [alchemyProvider({ apiKey: "dykRbudzIvk8Zxb-P_Keuzyr8zHYvJd2" })]
 );
 
 const config = createConfig({
