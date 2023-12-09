@@ -1,8 +1,11 @@
-import Refer from "@/components/Modals/Refer";
-import PieChart from "@/components/UI/PieChart";
 import { getAllData } from "@/developer-apis";
-import Image from "next/image";
 import React, { useState } from "react";
+import Refer from '@/components/Modals/Refer';
+import AssetsHeader from '@/components/Modules/AssetsHeader';
+import AssetsInfo from '@/components/Modules/AssetsInfo';
+import PieChart from '@/components/UI/PieChart';
+import { dummyAssets, headers } from '@/data';
+import Image from 'next/image';
 
 const Portfolio = () => {
   const [showTable, setShowTable] = useState(false);
@@ -22,10 +25,10 @@ const Portfolio = () => {
   // }, [address]);
 
   return (
-    <main className="flex flex-col pt-28 min-h-screen mx-auto px-10 font-Avenir bg-black">
-      <div className="w-fit">
-        <div className="flex justify-between items-center mb-5">
-          <p className="text-white text-2xl  font-semibold">Welcome, Aman!</p>
+    <main className='flex flex-col pt-28 min-h-screen  px-10 font-Avenir bg-black w-fit'>
+      <div className='w-fit'>
+        <div className='flex justify-between items-center mb-5'>
+          <p className='text-white text-2xl  font-semibold'>Welcome, Aman!</p>
           <button
             onClick={() => {
               setShowModal(true);
@@ -112,6 +115,22 @@ const Portfolio = () => {
       {showChart && (
         <div className="w-[800px] h-[800px]  mt-10 mx-auto">
           <PieChart />
+        </div>
+      )}
+
+      {showTable && (
+        <div className='w-full'>
+          <AssetsHeader headers={headers} />
+
+          {dummyAssets.map((asset) => (
+            <AssetsInfo
+              key={asset.name}
+              balance={asset.balance}
+              profit={asset.profit}
+              name={asset.name}
+              value={asset.value}
+            />
+          ))}
         </div>
       )}
 
