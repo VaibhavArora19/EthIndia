@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.20;
+pragma solidity 0.8.19;
 import {Plugin} from "@1inch/token-plugins/contracts/Plugin.sol";
 import {IERC20Plugins} from "@1inch/token-plugins/contracts/interfaces/IERC20Plugins.sol";
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
@@ -27,7 +27,9 @@ contract ReferralPlugin is Plugin, ERC20 {
         require(!referrers[msg.sender], "Already Registered");
         require(verify(_pA, _pB, _pC, _pubSignals), "Not Valid");
         referrers[msg.sender] = true;
-        token.addPlugin(address(this));
+        if (!token.hasPlugin(msg.sender, address(this))) {
+            token.addPlugin(address(this));
+        }
     }
 
     function verifyRefer(
@@ -40,7 +42,9 @@ contract ReferralPlugin is Plugin, ERC20 {
         require(!referred[msg.sender], "Already Claimed");
         require(referrers[referrer], "Not a referrer");
         require(verify(_pA, _pB, _pC, _pubSignals), "Not Valid");
-        token.addPlugin(address(this));
+        if (!token.hasPlugin(msg.sender, address(this))) {
+            token.addPlugin(address(this));
+        }
         referralPoints[msg.sender] += 1;
         referralPoints[referrer] += 1;
         referred[msg.sender] = true;

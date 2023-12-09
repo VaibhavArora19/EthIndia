@@ -23,13 +23,14 @@ const Refer = ({ onClose }) => {
       const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
         anonAadhaar.pcd
       );
+      console.log(a);
       const { hash } = await writeContract({
         address: referralContract,
         abi: referralAbi,
         functionName: "registerReferrer",
         args: [a, b, c, Input],
       });
-      await waitForTransaction(hash);
+      await waitForTransaction({ hash });
       setRegister(true);
       toast.success("Registered Successfully");
     } catch (e) {
