@@ -19,6 +19,13 @@ async function fetchKey(keyURL) {
 }
 
 async function main() {
+  const token = await hre.ethers.deployContract(
+    "SystematicInvestmentToken",
+    [5, 100000]
+  );
+  await token.waitForDeployment();
+  const tokenAddress = await token.getAddress();
+  console.log(tokenAddress);
   const verifier = await hre.ethers.deployContract("Verifier");
   await verifier.waitForDeployment();
 
@@ -37,7 +44,7 @@ async function main() {
   console.log(_anonAadhaarVerifierAddress);
 
   const ReferralPlugin = await ethers.deployContract("ReferralPlugin", [
-    "0x4098Aaf39d5374573d69b2a95cE936c739216c35",
+    tokenAddress,
     _anonAadhaarVerifierAddress,
   ]);
 

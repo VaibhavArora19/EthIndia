@@ -1,6 +1,5 @@
 import Invest from "@/components/Modules/Invest";
 import Onramper from "@/components/Modules/Onramper";
-import AnonAadhaar from "@/helpers";
 import { useState } from "react";
 
 export default function Home() {
@@ -37,7 +36,7 @@ export default function Home() {
           Fiat
         </p>
       </div>
-      <AnonAadhaar />
+
       {crypto ? <Invest /> : <Onramper />}
     </main>
   );
