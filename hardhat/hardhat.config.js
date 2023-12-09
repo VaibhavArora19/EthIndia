@@ -22,9 +22,9 @@ module.exports = {
       url: "https://rpc.public.zkevm-test.net	",
       accounts: [DEPLOYER_PRIVATE_KEY],
     },
-    goerli: {
+    mumbai: {
       // If not set, you can get your own Alchemy API key at https://dashboard.alchemyapi.io or https://infura.io
-      url: process.env.GOERLI_RPC_URL ?? "",
+      url: "https://polygon-testnet.public.blastapi.io",
       accounts: [DEPLOYER_PRIVATE_KEY],
     },
   },
