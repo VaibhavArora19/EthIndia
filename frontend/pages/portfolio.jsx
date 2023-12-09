@@ -7,6 +7,7 @@ import PieChart from "@/components/UI/PieChart";
 import { dummyAssets, headers } from "@/data";
 import Image from "next/image";
 import { SERVER_URL } from "@/constants";
+import { useAccount } from "wagmi";
 
 const Portfolio = () => {
   const [showTable, setShowTable] = useState(false);
@@ -128,15 +129,17 @@ const Portfolio = () => {
         <div className="w-full">
           <AssetsHeader headers={headers} />
 
-          {dummyAssets.map((asset) => (
-            <AssetsInfo
-              key={asset.name}
-              balance={asset.balance}
-              profit={asset.profit}
-              name={asset.name}
-              value={asset.value}
-            />
-          ))}
+          {tokenInfo &&
+            tokenInfo.length > 0 &&
+            tokenInfo.map((asset) => (
+              <AssetsInfo
+                key={asset.name}
+                balance={asset.amount}
+                profit={asset.abs_profit_usd}
+                name={asset.name}
+                value={asset.value_usd}
+              />
+            ))}
         </div>
       )}
 
