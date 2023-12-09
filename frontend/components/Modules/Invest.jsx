@@ -107,12 +107,11 @@ const Invest = () => {
                 <option
                   selected
                   disabled>
-                  {' '}
                   Select time span here
                 </option>
-                <option value='1'>1 Day</option>
-                <option value='7'>1 Week</option>
+                <option value='7'>7 Days</option>
                 <option value='30'>1 Month</option>
+                <option value='90'>3 Month</option>
               </select>
             </div>
           </div>
@@ -121,7 +120,7 @@ const Invest = () => {
         <button
           onClick={investHandler}
           type='button'
-          className='bg-[#883489] w-full mt-3 text-white py-3 font-semibold text-base hover:bg-[#612562] tracking-wider   rounded-2xl '>
+          className='bg-[#58162D] w-full mt-3 text-white py-3 font-semibold text-base hover:bg-[#421021] tracking-wider   rounded-2xl '>
           Invest in SIT
         </button>
       </div>

@@ -3,7 +3,7 @@ import Backdrop from "../UI/Backdrop";
 import { FaLink } from "react-icons/fa6";
 import { useAccount } from "wagmi";
 import { exportCallDataGroth16FromPCD } from "anon-aadhaar-pcd";
-import { writeContract, waitForTransaction } from "@wagmi/core";
+import { writeContract, waitForTransaction, readContract } from "@wagmi/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { referralAbi, referralContract } from "@/constants";
@@ -18,12 +18,27 @@ const Refer = ({ onClose }) => {
   const [anonAadhaar] = useAnonAadhaar();
   const [register, setRegister] = useState(false);
 
+  const getRefer = async () => {
+    try {
+      const data = await readContract({
+        address: referralContract,
+        abi: referralAbi,
+        functionName: "referrers",
+        args: [address],
+      });
+      console.log(data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getRefer();
+
   const registerReferrer = async () => {
     try {
       const { a, b, c, Input } = await exportCallDataGroth16FromPCD(
         anonAadhaar.pcd
       );
-      console.log(a);
       const { hash } = await writeContract({
         address: referralContract,
         abi: referralAbi,
@@ -31,6 +46,7 @@ const Refer = ({ onClose }) => {
         args: [a, b, c, Input],
       });
       await waitForTransaction({ hash });
+      console.log("xxx", hash);
       setRegister(true);
       toast.success("Registered Successfully");
     } catch (e) {
@@ -43,11 +59,14 @@ const Refer = ({ onClose }) => {
       <Backdrop onClose={onClose} />
       <div className="bg-[#0F0F0F] w-[500px] fixed top-[50%] left-[50%] text-white -translate-x-[50%] -translate-y-[50%] z-30 p-6 rounded-md">
         <p className="text-2xl font-semibold mb-1">Refer & Earn</p>
-        <p className="mb-8">
+        <p className="mb-5">
           Only people with the aadhar card can use this Referal system signing
           up with ANON Aadhar.
         </p>
 
+        <p className="text-sm font-semibold text-left mb-5">
+          Note: 10 rSIT = 1 SIT
+        </p>
         {/** Hide once logged in */}
         {anonAadhaar.status != "logged-in" ? (
           <LogInWithAnonAadhaar />
