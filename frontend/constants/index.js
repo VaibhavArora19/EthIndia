@@ -4,6 +4,65 @@ export const mainContract = "0xxxxxx"; //!change this later
 
 export const SERVER_URL = "http://localhost:8080";
 
+export const TOKENS = [
+  {
+    symbol: "USDT",
+    name: "Tether USD",
+    address: "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+    decimals: 6,
+    logoURI:
+      "https://tokens.1inch.io/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+  },
+  {
+    symbol: "DAI",
+    name: "(PoS) Dai Stablecoin",
+    address: "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+    decimals: 18,
+    logoURI:
+      "https://tokens.1inch.io/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+  },
+  {
+    symbol: "WBTC",
+    name: "Wrapped BTC",
+    address: "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+    decimals: 8,
+    logoURI:
+      "https://tokens.1inch.io/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
+  },
+  {
+    symbol: "LINK",
+    name: "ChainLink Token",
+    address: "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
+    decimals: 18,
+    logoURI:
+      "https://tokens.1inch.io/0x514910771af9ca656af840dff83e8264ecf986ca.png",
+  },
+  {
+    symbol: "WMATIC",
+    name: "Wrapped Matic",
+    address: "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+    decimals: 18,
+    logoURI:
+      "https://tokens.1inch.io/0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270.png",
+  },
+  {
+    symbol: "ETH",
+    name: "Ether",
+    address: "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+    decimals: 18,
+    logoURI:
+      "https://tokens.1inch.io/0x7ceb23fd6bc0add59e62ac25578270cff1b9f619.png",
+  },
+  {
+    symbol: "USDC_1",
+    name: "USD Coin (PoS)",
+    address: "0x2791bca1f2de4661ed88a30c99a7a9449aa84174",
+    decimals: 6,
+    logoURI:
+      "https://tokens.1inch.io/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+  },
+];
+
 export const mainContractABI = [
   {
     inputs: [
