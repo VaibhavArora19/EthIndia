@@ -64,12 +64,12 @@ const Invest = () => {
       );
       //! usdc contract is of polygon mainnet
       const usdcContract = new ethers.Contract(USDC_POLYGON, ERC20_ABI, signer);
-      // const tx = await usdcContract.approve(
-      //   mainContract,
-      //   "12111111111111111231111113211"
-      // );
+      const tx = await usdcContract.approve(
+        mainContract,
+        "12111111111111111231111113211"
+      );
 
-      // await tx.wait();
+      await tx.wait();
 
       // console.log(ethers.utils.parseUnits(amount, 6).toSt);
       const timePeriod = time * 86400;

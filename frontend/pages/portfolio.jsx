@@ -6,7 +6,7 @@ import AssetsInfo from "@/components/Modules/AssetsInfo";
 import PieChart from "@/components/UI/PieChart";
 import { dummyAssets, headers } from "@/data";
 import Image from "next/image";
-import { SERVER_URL, mainContractABI } from "@/constants";
+import { SERVER_URL, mainContract, mainContractABI } from "@/constants";
 import { useAccount } from "wagmi";
 import { Skeleton } from "@mui/material";
 import { ethers } from "ethers";
@@ -26,7 +26,7 @@ const Portfolio = () => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
 
     const contract = new ethers.Contract(
-      "0xb1FCFBaf795ad5997e83FC9816BC4BB876ae0399",
+      mainContract,
       mainContractABI,
       provider
     );
@@ -36,7 +36,7 @@ const Portfolio = () => {
     console.log("ttotla", totalSupply.toString());
     setTotalSup(totalSupply.toString());
 
-    const balanceSIT = ethers.utils.formatUnits(balancee, 18);
+    const balanceSIT = ethers.utils.formatUnits(balancee, 6);
     // console.log("bbb", ethers.utils.formatUnits(balanceSIT, 18));
 
     setSitBalance(balanceSIT);
@@ -142,7 +142,9 @@ const Portfolio = () => {
                   />
                 )}
               </p>
-              <p className="text-sm ">~$2,322 USD Coin (POS)</p>
+              <p className="text-sm ">
+                {"~$" + sitBalance + " USD Coin (POS)"}
+              </p>
             </div>
           </div>
 
