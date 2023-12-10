@@ -17,6 +17,7 @@ const Portfolio = () => {
   const [showModal, setShowModal] = useState(false);
   const [tokenInfo, setTokenInfo] = useState(null);
   const [totalBalance, setTotalBalance] = useState(null);
+  const [totalSup, setTotalSup] = useState(null);
   const [sitBalance, setSitBalance] = useState(null);
   const [roi, setRoi] = useState(null);
   const { address } = useAccount();
@@ -30,11 +31,15 @@ const Portfolio = () => {
       provider
     );
 
-    const balanceSIT = await contract.balanceOf(address);
+    const balancee = await contract.balanceOf(address);
+    const totalSupply = await contract.totalSupply();
+    console.log("ttotla", totalSupply.toString());
+    setTotalSup(totalSupply.toString());
 
+    const balanceSIT = ethers.utils.formatUnits(balancee, 18);
     // console.log("bbb", ethers.utils.formatUnits(balanceSIT, 18));
 
-    setSitBalance(ethers.utils.formatUnits(balanceSIT, 18));
+    setSitBalance(balanceSIT);
 
     const data = await fetch(`${SERVER_URL}/token/details/${address}`);
 
@@ -48,7 +53,11 @@ const Portfolio = () => {
     }
     setRoi(rateOfInterest / 3);
     setTokenInfo(info.tokenInfo);
-    setTotalBalance(balance);
+    setTotalBalance(
+      +totalSupply.toString() > 0
+        ? (balance / +totalSupply.toString()) * balanceSIT
+        : balance.toString()
+    );
   }, [address]);
 
   useEffect(() => {
@@ -90,8 +99,8 @@ const Portfolio = () => {
             />
             <p className="text-sm mt-8 mb-1">Total Balance</p>
             <p className="text-3xl font-semibold">
-              {totalBalance ? (
-                `$ ${totalBalance.toString().substring(0, 8)}`
+              {totalBalance >= 0 ? (
+                `$ ${totalBalance?.toString()?.substring(0, 8)}`
               ) : (
                 <Skeleton
                   variant="rectangular"
@@ -222,8 +231,10 @@ const Portfolio = () => {
           {tokenInfo &&
             tokenInfo.length > 0 &&
             tokenInfo.map((asset) =>
-              AssetsInfo.value ? (
+              asset.value ? (
                 <AssetsInfo
+                  totalSupply={totalSup}
+                  sitBalance={sitBalance}
                   key={asset.name}
                   balance={asset.amount}
                   profit={asset.abs_profit_usd}
