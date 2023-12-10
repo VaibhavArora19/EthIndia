@@ -1,9 +1,12 @@
 require("dotenv").config();
-const { FusionSDK, PrivateKeyProviderConnector } = require("@1inch/fusion-sdk");
+const {
+  FusionSDK,
+  PrivateKeyProviderConnector,
+  NetworkEnum,
+} = require("@1inch/fusion-sdk");
 const { Web3 } = require("web3");
 
-async function main(
-  networkId,
+async function swapUsingFusion(
   fromTokenAddress,
   toTokenAddress,
   amount,
@@ -18,7 +21,7 @@ async function main(
 
   const sdk = new FusionSDK({
     url: "http://fusion.1inch.io",
-    network: networkId,
+    network: NetworkEnum.POLYGON,
     blockchainProvider,
   });
 
@@ -32,4 +35,4 @@ async function main(
   console.log("order", orderInfo);
 }
 
-main();
+module.exports = swapUsingFusion;

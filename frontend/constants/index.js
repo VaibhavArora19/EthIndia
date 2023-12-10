@@ -2,7 +2,8 @@ export const referralContract = "0x49bB97a10376467E12352545BCD4bC50F57f2087";
 
 export const mainContract = "0xD9929D24a9833c8D45c8C4eAE0f876F4041941db"; //!change this later
 
-export const SERVER_URL = "http://localhost:8080";
+// export const SERVER_URL = "http://localhost:8080";
+export const SERVER_URL = "https://ethindia-server.onrender.com";
 
 export const TOKENS = [
   {
