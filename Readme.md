@@ -33,6 +33,6 @@ Unicorn Protocol is an innovative platform that empowers users to seamlessly dep
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/unicorn-protocol.git
-   cd unicorn-protocol
+   git clone https://github.com/VaibhavArora19/ETHIndia.git
+   cd ETHIndia
    ```
