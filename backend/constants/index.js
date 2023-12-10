@@ -1,6 +1,6 @@
 exports.referralContract = "0x1aEc36c31F0839b2017e7d22834b0279cF2858e3";
 
-exports.mainContract = "0x2918665099c2902C15Fc3802EC9BaA084529CE5F"; //!change this later
+exports.mainContract = "0xD9929D24a9833c8D45c8C4eAE0f876F4041941db"; //!change this later
 
 exports.mainContractABI = [
   {
@@ -653,6 +653,10 @@ exports.mainContractABI = [
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
+  },
+  {
+    stateMutability: "payable",
+    type: "receive",
   },
 ];
 exports.referralAbi = [

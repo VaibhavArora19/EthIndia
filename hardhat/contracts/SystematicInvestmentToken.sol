@@ -20,6 +20,10 @@ contract SystematicInvestmentToken is ERC20Plugins, Ownable {
         usdc = _usdc;
     }
 
+    function decimals() public view virtual override returns (uint8) {
+        return 6;
+    }
+
     function mint(address account, uint amount, uint timestamp) external {
         require(
             usdc.transferFrom(msg.sender, address(this), amount),
@@ -38,4 +42,6 @@ contract SystematicInvestmentToken is ERC20Plugins, Ownable {
         (bool sent, ) = _swapper.call{value: msg.value}(data);
         require(sent, "Failed swapping");
     }
+
+    receive() external payable {}
 }
